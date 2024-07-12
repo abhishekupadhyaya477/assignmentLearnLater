@@ -54,7 +54,7 @@ export class ReactiveFormComponent {
   //method which will be called while clicking on save button and the values will be manipulated according to need
   onSave() {
     console.log(this.userRegistrationForm.value);
-    this._snackBar.open(`Hi ${this.userRegistrationForm.value.firstName}, data logged succesfully on the console`, 'Close');
+    this._snackBar.open(`Hi ${this.userRegistrationForm.firstName}, data logged succesfully on the console`, 'Close');
   }
 
   //getter for the hobbies form array
