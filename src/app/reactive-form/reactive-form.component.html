@@ -1,0 +1,63 @@
+<!-- header section -->
+<mat-card fxLayout="column" fxLayoutAlign="center center" class="header-card">
+    <mat-card-header>
+      <mat-card-title class="header-title">Assignment LearnLater</mat-card-title>
+    </mat-card-header>
+  </mat-card>
+  <!-- user registration form -->
+<mat-card fxLayout="column" fxLayoutGap="20px">
+  <form [formGroup]="userRegistrationForm" (ngSubmit)="onSave()" fxLayout="column" fxLayoutGap="20px">
+    <!-- name section -->
+    <div fxLayout="row" fxLayoutGap="20px" fxLayout.xs="column">
+      <mat-form-field appearance="fill" fxFlex>
+        <mat-label>First Name</mat-label>
+        <input matInput id="firstName" formControlName="firstName">
+        <mat-error *ngIf="userRegistrationForm.get('firstName').invalid && userRegistrationForm.get('firstName').touched">
+          First Name is required.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" fxFlex>
+        <mat-label>Last Name</mat-label>
+        <input matInput id="lastName" formControlName="lastName">
+      </mat-form-field>
+    </div>
+    <!-- dob and age section -->
+    <div fxLayout="row" fxLayoutGap="20px" fxLayout.xs="column">
+      <mat-form-field appearance="fill" fxFlex>
+        <mat-label>Date of Birth</mat-label>
+        <input readonly matInput [matDatepicker]="picker" [max]="maxDate" id="dateOfBirth" formControlName="dateOfBirth">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="userRegistrationForm.get('dateOfBirth').invalid && userRegistrationForm.get('dateOfBirth').touched">
+          Date of Birth is required.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" fxFlex>
+        <mat-label>Age</mat-label>
+        <input matInput id="age" formControlName="age" readonly>
+      </mat-form-field>
+    </div>
+    <!-- hobbies section -->
+    <div formArrayName="hobbies">
+      <label>Your Hobbies:</label>
+      <div *ngFor="let hobby of hobbies.controls; let i = index" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" class="hobby-item">
+        <mat-form-field appearance="fill" fxFlex>
+          <mat-label>Hobby</mat-label>
+          <input matInput [formControlName]="i">
+        </mat-form-field>
+        <!-- disabling the remove button for the first entry -->
+        <button mat-icon-button type="button" [disabled]="i==0" (click)="removeHobby(i)">
+          <mat-icon>remove_circle</mat-icon>
+        </button>
+      </div>
+      <button mat-raised-button color="primary" type="button" class="ml-10" (click)="addHobby()">Add Hobby</button>
+      <mat-error *ngIf="hobbies.invalid && hobbies.touched">
+        At least one hobby is required.
+      </mat-error>
+    </div>
+    <!-- submit button -->
+    <button mat-raised-button color="primary" type="submit" [disabled]="userRegistrationForm.invalid">Save</button>
+  </form>
+</mat-card>
